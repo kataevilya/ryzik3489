@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ryzik3489</title>
+    <!-- подключаем четкий современный шрифт -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050506;
+            --metal-surface: linear-gradient(145deg, #16161a 0%, #0b0b0e 100%);
+            --metal-border: #282830;
+            --metal-highlight: #4a4a58;
+            --text-main: #f0f0f5;
+            --text-silver: #9090a0;
+            --chrome-gradient: linear-gradient(180deg, #ffffff 0%, #a5a5b5 50%, #6e6e7a 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            text-transform: lowercase; /* строго маленькие буквы везде */
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            /* текстура темного металла и радиальный свет */
+            background-image: 
+                radial-gradient(circle at 50% 0%, #1c1c24 0%, transparent 60%),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 4px);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 1.5rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 820px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* шапка с хромированным текстом */
+        header {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(90deg, #18181f, #101014);
+            border: 1px solid var(--metal-border);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            padding: 0.4rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-silver);
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            background: #e0e0e8;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ffffff;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 8vw, 4.8rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            background: var(--chrome-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.06));
+            margin-bottom: 1rem;
+        }
+
+        .bio-text {
+            font-size: 1.15rem;
+            color: var(--text-silver);
+            max-width: 580px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .bio-text strong {
+            color: #e4e4ec;
+            font-weight: 500;
+        }
+
+        /* металлический разделитель */
+        .divider {
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--metal-highlight), transparent);
+            margin: 2.5rem 0;
+            opacity: 0.4;
+        }
+
+        /* секция стека */
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            color: #6c6c7c;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        .stack-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 3rem;
+        }
+
+        .metal-pill {
+            background: linear-gradient(180deg, #1e1e26 0%, #101014 100%);
+            border: 1px solid #2a2a35;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                0 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 0.55rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #d0d0dc;
+            transition: all 0.25s ease;
+        }
+
+        .metal-pill:hover {
+            border-color: #606075;
+            transform: translateY(-2px);
+            color: #ffffff;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                0 6px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        /* карточки проектов в стиле темного титана */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 680px) {
+            .projects-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .metal-card {
+            position: relative;
+            background: var(--metal-surface);
+            border: 1px solid var(--metal-border);
+            border-radius: 18px;
+            padding: 2rem;
+            overflow: hidden;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 20px 40px rgba(0, 0, 0, 0.65);
+            transition: border-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 250px;
+        }
+
+        /* интерактивный металлический блик при наведении */
+        .metal-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(255, 255, 255, 0.08), 
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .metal-card:hover::before {
+            opacity: 1;
+        }
+
+        .metal-card:hover {
+            border-color: #555568;
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2a2a35, #121217);
+            border: 1px solid #3a3a48;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .card-type {
+            font-size: 0.78rem;
+            color: #78788a;
+            border: 1px solid #25252e;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .metal-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            background: linear-gradient(90deg, #ffffff, #b8b8c8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .metal-card p {
+            color: var(--text-silver);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 1.8rem;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 1rem;
+        }
+
+        .card-tags span {
+            font-size: 0.8rem;
+            color: #b0b0c0;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.25rem 0.6rem;
+            border-radius: 5px;
+        }
+
+        /* подвал */
+        footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #18181f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #555566;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="badge">
+                <span class="badge-dot"></span>
+                <span>system & software developer</span>
+            </div>
+            <h1>ryzik3489</h1>
+            <p class="bio-text">
+                программист. разрабатываю собственные операционные системы, низкоуровневую архитектуру и защищенные приложения с нуля на <strong>rust</strong> и <strong>c</strong>.
+            </p>
+        </header>
+
+        <div class="stack-list">
+            <div class="metal-pill">rust</div>
+            <div class="metal-pill">c</div>
+            <div class="metal-pill">c++</div>
+            <div class="metal-pill">osdev</div>
+            <div class="metal-pill">криптография</div>
+            <div class="metal-pill">низкоуровневый код</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <section>
+            <div class="section-title">ключевые проекты</div>
+            <div class="projects-grid">
+                
+                <!-- проект 1: ryzikchat -->
+                <div class="metal-card">
+                    <div>
+                        <div class="card-header">
+                            <div class="card-icon">rc</div>
+                            <span class="card-type">мессенджер</span>
+                        </div>
+                        <h3>ryzikchat</h3>
+                        <p>
+                            приватный мессенджер с надежным шифрованием сообщений. быстрый обмен данными, защита переписки и полная безопасность без лишнего мусора.
+                        </p>
+                    </div>
+                    <div class="card-tags">
+                        <span>шифрование</span>
+                        <span>безопасность</span>
+                        <span>сеть</span>
+                    </div>
+                </div>
+
+                <!-- проект 2: ryzikos -->
+                <div class="metal-card">
+                    <div>
+                        <div class="card-header">
+                            <div class="card-icon">os</div>
+                            <span class="card-type">система</span>
+                        </div>
+                        <h3>ryzikos</h3>
+                        <p>
+                            собственная операционная система, написанная с нуля. кастомное ядро, прямая работа с железом и памятью, высокая скорость и минимализм.
+                        </p>
+                    </div>
+                    <div class="card-tags">
+                        <span>rust</span>
+                        <span>c</span>
+                        <span>bare-metal</span>
+                        <span>kernel</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <span>ryzik3489 // био</span>
+            <span>black metal edition</span>
+        </footer>
+    </div>
+
+    <script>
+        // скрипт для живого металлического блика на карточках при движении мыши
+        document.querySelectorAll('.metal-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+</html>
